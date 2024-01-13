@@ -52,7 +52,7 @@ function displayForecast(data) {
     const forecastBody = $('<div>').attr('class', 'card-body');
     const forecastIconUrl = `https://openweathermap.org/img/wn/${day.weather[0].icon}.png`;
     const forecastIcon = $('<img>').attr('src', forecastIconUrl);
-    const forecastTitle = $('<h5>').attr('class', 'card-title').text(dayjs(day.dt_txt).format('MM-DD-YYYY')); // Year optional
+    const forecastTitle = $('<h5>').attr('class', 'card-title').text(dayjs(day.dt_txt).format('DD-MM-YYYY')); // Year optional
     const forecastTemp = $('<p>').text(`Temp: ${day.main.temp} °C`);
     const forecastWind = $('<p>').text(`Wind: ${day.wind.speed} kph`);
     const forecastHumidity = $('<p>').text(`Humidity: ${day.main.humidity} %`);
