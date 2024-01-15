@@ -75,11 +75,14 @@ function displayForecast(data) {
 // Event listener on search button
 $('#search-button').on('click', function(e) {
   e.preventDefault();
-
   const search = $('#search-input').val().trim();
-  $('#today').attr('class', 'mt-3');
-  fetchWeather(search);
-})
+
+  // Only run fetchWeather if #search-input is not empty
+  if (search) {
+    $('#today').attr('class', 'mt-3');
+    fetchWeather(search);  
+  };
+});
 
 
     // Movie button activity for persistant search (activity day 2 - 5 ) - use localstorage
