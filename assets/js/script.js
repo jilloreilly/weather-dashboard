@@ -1,11 +1,11 @@
 // Global variables
 const apiKey = '6e2fbb8ce6e558d699d84f8ca7aa2a98'
-const searches = [];
 
 // Function to fetch weather data fromm Openweather API
 function fetchWeather(search) {
   let queryURL = `http://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=5&appid=${apiKey}`;
-  
+  $('#search-input').val('');
+
   fetch(queryURL)
     .then(function (response) {
         return response.json()
@@ -73,17 +73,30 @@ function displayForecast(data) {
   }
 };
 
+// Function to add searched locations to local storage
 function addSearchHistory(searchTerm) {
   let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-  searchHistory.push(searchTerm);
-  localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-  renderHistory(searchTerm);  
+
+  // if (localStorage.getItem(searchHistory) === null) {
+  //   searchHistory.push(searchTerm);  
+  //   localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+  // }
+  searchTerm = searchTerm.toUpperCase();
+
+  console.log(`searchTerm: ${searchTerm}`);
+
+  if (searchHistory.includes(searchTerm) === false) {
+    searchHistory.push(searchTerm);  
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+    renderHistory(searchTerm);  
+  }
+
+  
 };
 
 // Function for displaying previous search buttons
 function renderHistory() {
-  // Deletes the previous search buttons prior to adding new movies
-  // (this is necessary otherwise you will have repeat buttons)
+  
   $("#history").empty();
 
   let searchHistoryArr = JSON.parse(localStorage.getItem('searchHistory'));
@@ -92,7 +105,7 @@ function renderHistory() {
 
   for (let i = 0; i < searchHistoryArr.length; i++) {
     const prevSearch = searchHistoryArr[i];
-    const a = $("<button>").addClass('search').attr('data-name', prevSearch).text(prevSearch);
+    const a = $("<button>").addClass('prev-search').attr('data-name', prevSearch).text(prevSearch);
     $("#history").append(a);
   }
 };
@@ -109,10 +122,27 @@ $('#search-button').on('click', function(e) {
   };
 });
 
+// Event listener on prev-search button, load selected city current weather and 5 day forecast
+$('#history').on('click', '.prev-search', function() {
+  const selectedBtn = $(this).text()
+  fetchWeather(selectedBtn)
+  $('#today').removeClass('hide')
+});
+
+// $(document).ready(function () {
+//   localStorage.clear();
+// });
+
 
     // Movie button activity for persistant search (activity day 2 - 5 ) - use localstorage
+      // Fix duplicated prev search buttons
 
     // Style
+
+
+    // On page load, show search history
+
+    // Clear history button
 
 
 
