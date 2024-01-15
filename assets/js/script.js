@@ -77,24 +77,19 @@ function displayForecast(data) {
 function addSearchHistory(searchTerm) {
   let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
 
-  // if (localStorage.getItem(searchHistory) === null) {
-  //   searchHistory.push(searchTerm);  
-  //   localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-  // }
+  // Convert searchTerm to uppercase to prevent search history duplication
   searchTerm = searchTerm.toUpperCase();
 
   console.log(`searchTerm: ${searchTerm}`);
-
+  // Check localstorage array for searchTerm, if it doesn't exist then push to array
   if (searchHistory.includes(searchTerm) === false) {
     searchHistory.push(searchTerm);  
     localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
     renderHistory(searchTerm);  
-  }
-
-  
+  }  
 };
 
-// Function for displaying previous search buttons
+// Function to display locations previously searched
 function renderHistory() {
   
   $("#history").empty();
@@ -132,10 +127,6 @@ $('#history').on('click', '.prev-search', function() {
 // $(document).ready(function () {
 //   localStorage.clear();
 // });
-
-
-    // Movie button activity for persistant search (activity day 2 - 5 ) - use localstorage
-      // Fix duplicated prev search buttons
 
     // Style
 
