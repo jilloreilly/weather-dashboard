@@ -24,6 +24,7 @@ function fetchWeather(search) {
         .then(function (data) {
             console.log(data);
             displayForecast(data);
+            addSearchHistory(search);
         })
     })
 };
@@ -72,24 +73,28 @@ function displayForecast(data) {
   }
 };
 
+function addSearchHistory(searchTerm) {
+  let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+  searchHistory.push(searchTerm);
+  localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+  renderHistory(searchTerm);  
+};
+
 // Function for displaying previous search buttons
 function renderHistory() {
   // Deletes the previous search buttons prior to adding new movies
   // (this is necessary otherwise you will have repeat buttons)
   $("#history").empty();
 
-  // Loops through the array of past searches
-  $.each(searches, function (i, search) {
-    const a = $("<button>");
-    // Adds a class of search to button
-    a.addClass("search");
-    // Added a data-attribute of city name
-    a.attr("data-name", search);
-    // Provided the initial button text
-    a.text(search);
-    // Added the button to the history div
+  let searchHistoryArr = JSON.parse(localStorage.getItem('searchHistory'));
+
+  console.log(`Search history array: ${searchHistoryArr}`);
+
+  for (let i = 0; i < searchHistoryArr.length; i++) {
+    const prevSearch = searchHistoryArr[i];
+    const a = $("<button>").addClass('search').attr('data-name', prevSearch).text(prevSearch);
     $("#history").append(a);
-  })
+  }
 };
 
 // Event listener on search button
@@ -99,11 +104,8 @@ $('#search-button').on('click', function(e) {
 
   // Only run fetchWeather() if #search-input is not empty
   if (search) {
-    $('#today').attr('class', 'mt-3');
-    searches.push(search);
+    $('#today').attr('class', 'mt-3');    
     fetchWeather(search);
-    console.log(`Searches: ${searches}`);
-    renderHistory();  
   };
 });
 
@@ -111,6 +113,7 @@ $('#search-button').on('click', function(e) {
     // Movie button activity for persistant search (activity day 2 - 5 ) - use localstorage
 
     // Style
+
 
 
     
