@@ -74,34 +74,30 @@ function displayForecast(data) {
 
 // Function for displaying previous search buttons
 function renderHistory() {
-
   // Deletes the previous search buttons prior to adding new movies
   // (this is necessary otherwise you will have repeat buttons)
   $("#history").empty();
 
-  // Loops through the array of movies
+  // Loops through the array of past searches
   $.each(searches, function (i, search) {
-
-    // Then dynamically generates buttons for each movie in the array
-    // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
     const a = $("<button>");
-    // Adds a class of movie to our button
+    // Adds a class of search to button
     a.addClass("search");
-    // Added a data-attribute
+    // Added a data-attribute of city name
     a.attr("data-name", search);
     // Provided the initial button text
     a.text(search);
-    // Added the button to the buttons-view div
+    // Added the button to the history div
     $("#history").append(a);
   })
-}
+};
 
 // Event listener on search button
 $('#search-button').on('click', function(e) {
   e.preventDefault();
   const search = $('#search-input').val().trim();
 
-  // Only run fetchWeather if #search-input is not empty
+  // Only run fetchWeather() if #search-input is not empty
   if (search) {
     $('#today').attr('class', 'mt-3');
     searches.push(search);
@@ -116,6 +112,5 @@ $('#search-button').on('click', function(e) {
 
     // Style
 
-    // Search 
 
     
