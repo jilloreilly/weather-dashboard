@@ -3,7 +3,7 @@ const apiKey = '6e2fbb8ce6e558d699d84f8ca7aa2a98'
 
 // Function to fetch weather data from Openweather API
 function fetchWeather(search) {
-  let queryURL = `http://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=5&appid=${apiKey}`;
+  let queryURL = `https://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=5&appid=${apiKey}`;
   $('#search-input').val('');
 
   fetch(queryURL)
@@ -14,7 +14,7 @@ function fetchWeather(search) {
         console.log(`geo data: ${data}`);
         let latitude = data[0].lat
         let longitude = data[0].lon
-        let forecastURl = `http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`;
+        let forecastURl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`;
         const h3El = $('#card-title').text(`${data[0].name} (${dayjs().format('MMMM D, YYYY')})`);
 
         fetch(forecastURl)
