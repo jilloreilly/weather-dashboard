@@ -1,7 +1,7 @@
 // Global variables
 const apiKey = '6e2fbb8ce6e558d699d84f8ca7aa2a98'
 
-// Function to fetch weather data fromm Openweather API
+// Function to fetch weather data from Openweather API
 function fetchWeather(search) {
   let queryURL = `http://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=5&appid=${apiKey}`;
   $('#search-input').val('');
@@ -26,7 +26,22 @@ function fetchWeather(search) {
             displayForecast(data);
             addSearchHistory(search);
         })
-    })
+    });
+
+    const pixabayKey = `41840177-083bd3031be52d22c24f809f7`;    
+    const pixabayURL = `https://pixabay.com/api/?key=${pixabayKey}&q=${search}&image_type=photo`;
+
+    // Fetch image data from Pixabay
+    fetch(pixabayURL)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(`pixabay data: ${data}`);
+        const locationImg = data.hits[0].largeImageURL;
+        console.log(`image url: ${locationImg}`);
+        $('body').css('background-image', `url(${locationImg})`);
+      });
 };
 
 // Function to display the current weather of a city
@@ -91,19 +106,29 @@ function addSearchHistory(searchTerm) {
 
 // Function to display locations previously searched
 function renderHistory() {
-  
   $("#history").empty();
-
   let searchHistoryArr = JSON.parse(localStorage.getItem('searchHistory'));
 
   console.log(`Search history array: ${searchHistoryArr}`);
 
   for (let i = 0; i < searchHistoryArr.length; i++) {
     const prevSearch = searchHistoryArr[i];
-    const a = $("<button>").addClass('prev-search').attr('data-name', prevSearch).text(prevSearch);
-    $("#history").append(a);
-  }
+    const a = $('<button>').addClass('prev-search').attr('data-name', prevSearch).text(prevSearch);
+    $('#history').append(a);
+  };
+  //Add button to clear search history
+  let clearBtn = $('<button>').addClass('clearBtn').text('Clear search history');
+  $('#history').append(clearBtn);
 };
+
+// Function to clear searchHistory and localstorage
+// function clearSearchHistory() {
+  $('.clearBtn').on('click', function() {
+    console.log('CLEAR CLEAR CLEAR');
+    $('#history').empty(); // Clear search history from page
+    localStorage.clear(); // Empty localstorage
+  });
+// };
 
 // Event listener on search button
 $('#search-button').on('click', function(e) {
@@ -124,14 +149,15 @@ $('#history').on('click', '.prev-search', function() {
   $('#today').removeClass('hide')
 });
 
-// $(document).ready(function () {
-//   localStorage.clear();
-// });
+// If searchHistory exists in localstorage, render search history to page on page load
+$(function() {
+  const isSearchHistory = JSON.parse(localStorage.getItem('searchHistory'));
+  if (isSearchHistory) {
+    renderHistory();
+  }  
+});
 
     // Style
-
-
-    // On page load, show search history
 
     // Clear history button
 
