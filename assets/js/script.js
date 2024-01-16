@@ -40,7 +40,7 @@ function fetchWeather(search) {
         console.log(`pixabay data: ${data}`);
         const locationImg = data.hits[0].largeImageURL;
         console.log(`image url: ${locationImg}`);
-        $('body').css('background-image', `url(${locationImg})`);
+        $('body').css({'background-image': `url(${locationImg})`, 'background-size': 'cover'});
       });
 };
 
@@ -113,7 +113,7 @@ function renderHistory() {
 
   for (let i = 0; i < searchHistoryArr.length; i++) {
     const prevSearch = searchHistoryArr[i];
-    const a = $('<button>').addClass('prev-search').attr('data-name', prevSearch).text(prevSearch);
+    const a = $('<button>').addClass('prev-search btn btn-light mt-2').attr('data-name', prevSearch).text(prevSearch);
     $('#history').append(a);
   };
   //Add button to clear search history
