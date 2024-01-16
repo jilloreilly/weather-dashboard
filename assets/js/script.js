@@ -11,7 +11,6 @@ function fetchWeather(search) {
         return response.json()
     })
     .then(function (data) {
-        console.log(`geo data: ${data}`);
         let latitude = data[0].lat
         let longitude = data[0].lon
         let forecastURl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`;
@@ -22,7 +21,6 @@ function fetchWeather(search) {
             return response.json()
         })
         .then(function (data) {
-            console.log(data);
             displayForecast(data);
             addSearchHistory(search);
         })
@@ -37,9 +35,7 @@ function fetchWeather(search) {
         return response.json();
       })
       .then(function (data) {
-        console.log(`pixabay data: ${data}`);
         const locationImg = data.hits[0].largeImageURL;
-        console.log(`image url: ${locationImg}`);
         $('body').css({'background-image': `url(${locationImg})`, 'background-size': 'cover'});
       });
 };
@@ -47,7 +43,6 @@ function fetchWeather(search) {
 // Function to display the current weather of a city
 function displayCurrentWeather(currentWeather) {
   const iconUrl = `https://openweathermap.org/img/wn/${currentWeather.weather[0].icon}.png` 
-  console.log(iconUrl)
   const icon = $('#icon').attr('src', iconUrl);
   const temp = $('#temp').text(`Temperature: ${currentWeather.main.temp} °C`);
   const wind = $('#wind').text(`Wind: ${currentWeather.wind.speed} kph`);
@@ -62,8 +57,7 @@ function displayForecast(data) {
   const fiveDayForecast = currentWeather.filter(function (data) {
     return data.dt_txt.includes('12:00:00');
   });
-  console.log(fiveDayForecast);
-
+  
   // Empty forecast section to prevent duplication
   $('#forecast').empty();
   const forecastHeader = $('<h3>').text('5-Day Forecast:').addClass('mb-3');
@@ -97,7 +91,6 @@ function addSearchHistory(searchTerm) {
   // Convert searchTerm to uppercase to prevent search history duplication
   searchTerm = searchTerm.toUpperCase();
 
-  console.log(`searchTerm: ${searchTerm}`);
   // Check localstorage array for searchTerm, if it doesn't exist then push to array
   if (searchHistory.includes(searchTerm) === false) {
     searchHistory.push(searchTerm);  
@@ -110,8 +103,6 @@ function addSearchHistory(searchTerm) {
 function renderHistory() {
   $("#history").empty();
   let searchHistoryArr = JSON.parse(localStorage.getItem('searchHistory'));
-
-  console.log(`Search history array: ${searchHistoryArr}`);
 
   for (let i = 0; i < searchHistoryArr.length; i++) {
     const prevSearch = searchHistoryArr[i];
@@ -158,10 +149,6 @@ $(function() {
     renderHistory();
   }  
 });
-
-    // Style
-
-    // Clear history button
 
 
 
