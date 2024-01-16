@@ -56,7 +56,7 @@ Thank you to the following:
 
 - My tutor **Cody Junier** for helping me resolve an issue of duplicate search entries by utilising the .includes() method on the searchHistory array in localstorage
 
-- **Sarah Egleston** from Pod 2 for recommending the [Pixabay API](https://pixabay.com/api/docs/) for location images 
+- [**Sarah Egleston**](https://github.com/segleston) from Pod 2 for recommending the [Pixabay API](https://pixabay.com/api/docs/) for location images 
 
 - Icons8 for [favicon](https://icons8.com/icons/set/schedule)
 
