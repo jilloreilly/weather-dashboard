@@ -66,7 +66,9 @@ function displayForecast(data) {
 
   // Empty forecast section to prevent duplication
   $('#forecast').empty();
-
+  const forecastHeader = $('<h3>').text('5-Day Forecast:').addClass('mb-3');
+  $('#forecast').prepend(forecastHeader);
+  
   for (let i = 0; i < fiveDayForecast.length; i++) {
     // Create elements
     const day = fiveDayForecast[i];
@@ -117,18 +119,18 @@ function renderHistory() {
     $('#history').append(a);
   };
   //Add button to clear search history
-  let clearBtn = $('<button>').addClass('clearBtn').text('Clear search history');
-  $('#history').append(clearBtn);
+  // let clearBtn = $('<button>').addClass('clearBtn btn btn-info').text('Clear search history');
+  // $('#history').append(clearBtn);
 };
 
-// Function to clear searchHistory and localstorage
-// function clearSearchHistory() {
-  $('.clearBtn').on('click', function() {
-    console.log('CLEAR CLEAR CLEAR');
-    $('#history').empty(); // Clear search history from page
-    localStorage.clear(); // Empty localstorage
-  });
-// };
+// // Function to clear searchHistory and localstorage
+// // function clearSearchHistory() {
+//   $('.clearBtn').on('click', function() {
+//     console.log('CLEAR CLEAR CLEAR');
+//     $('#history').empty(); // Clear search history from page
+//     localStorage.clear(); // Empty localstorage
+//   });
+// // };
 
 // Event listener on search button
 $('#search-button').on('click', function(e) {
